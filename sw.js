@@ -27,21 +27,21 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-1a479a6c6bfdb3c870d6.js"
+    "url": "webpack-runtime-1d5090fb70d6174743a6.js"
   },
   {
     "url": "framework-69b7467c8e4e8700a30e.js"
   },
   {
-    "url": "app-75b9a88c307b4a0c54b3.js"
+    "url": "app-56eb21844fb795ccbdc9.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "956a11e64be9f0ab9a1340a4822119aa"
+    "revision": "64f1498e0207ed3af5cf50a5ca1c381c"
   },
   {
     "url": "manifest.webmanifest",
-    "revision": "c45df880b9c8ef68c3d7d7ee1cd2cf1e"
+    "revision": "560dca5f1c5788f8b6de124df221f5ca"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -146,12 +146,12 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   lastNavigationRequest = event.request.url
 
   let { pathname } = new URL(event.request.url)
-  pathname = pathname.replace(new RegExp(`^https://radkomih.github.io/page`), ``)
+  pathname = pathname.replace(new RegExp(`^`), ``)
 
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`https://radkomih.github.io/page/app-75b9a88c307b4a0c54b3.js`))) {
+  if (!resources || !(await caches.match(`/app-56eb21844fb795ccbdc9.js`))) {
     return await fetch(event.request)
   }
 
@@ -164,7 +164,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
     }
   }
 
-  const offlineShell = `https://radkomih.github.io/page/offline-plugin-app-shell-fallback/index.html`
+  const offlineShell = `/offline-plugin-app-shell-fallback/index.html`
   const offlineShellWithKey = workbox.precaching.getCacheKeyForURL(offlineShell)
   return await caches.match(offlineShellWithKey)
 })
